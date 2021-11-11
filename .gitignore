@@ -37,7 +37,7 @@ package-lock.json
 npm-debug.log
 yarn-error.log
 yarn.lock
-android/
+android/app/build
 android/*
 android/**/*
 # BUCK
@@ -58,3 +58,5 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
+android/app/build/intermediates/desugar_graph/debug/out/currentProject/dirs_bucket_0/graph.bin
+android/.gradle/6.9/javaCompile/javaCompile.lock
