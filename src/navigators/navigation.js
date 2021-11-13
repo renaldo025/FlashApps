@@ -7,13 +7,16 @@ import Splash from '../modules/splash-screen/splashscreen'
 import Home from '../modules/home/home'
 import UpcomingSchedule from '../modules/upcoming-schedule/upcomingSchedule'
 import ScheduleDetail from '../modules/schedule-detail/scheduleDetail'
-import moment from "moment";
+import { useSelector } from 'react-redux'
+import moment from 'moment';
+import CONSTANT from '../constant/constant'
 import 'moment/locale/en-sg'
 moment.locale('en-sg')
 
 const Stack = createStackNavigator();
 
-function navigation() {
+function navigation({ }) {
+  const scheduleData = useSelector((state) => state.scheduleData)
 
   function headerOptions(param) {
     return {
@@ -27,13 +30,13 @@ function navigation() {
         fontWeight: 'bold'
       },
       headerTitleAlign: 'center',
-      title: param == 'Upcoming' ? 'UPCOMING SCHEDULE' : moment().format('DD MMMM YYYY'),
+      title: param == CONSTANT.UPCOMING ? CONSTANT.UPCOMING_SCHEDULE : scheduleData.dateFull,
       headerRight: () => (
-        param == 'Upcoming' ?
-        <TouchableOpacity style={styles.buttonRight}>
-          <Icon name='sync-alt' size={18} color={'black'} light />
-        </TouchableOpacity>
-        : null
+        param == CONSTANT.UPCOMING ?
+          <TouchableOpacity style={styles.buttonRight}>
+            <Icon name='sync-alt' size={18} color={'black'} light />
+          </TouchableOpacity>
+          : null
       ),
     }
 
@@ -48,7 +51,7 @@ function navigation() {
         <Stack.Screen name="SplashScreen" component={Splash} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen options={headerOptions('Upcoming')} name="UpcomingSchedule" component={UpcomingSchedule} />
-        <Stack.Screen options={headerOptions('Detail')} name="ScheduleDetail" component={ScheduleDetail} />
+        <Stack.Screen options={headerOptions('ScheduleDetail')} name="ScheduleDetail" component={ScheduleDetail} />
 
       </Stack.Navigator>
 

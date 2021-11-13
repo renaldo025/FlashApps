@@ -1,6 +1,7 @@
 import moment from "moment";
 import 'moment/locale/en-sg'
 moment.locale('en-sg')
+
 export function getData(value, length) {
     if (value == 'todaySchedule') {
         let data = {
@@ -8,7 +9,7 @@ export function getData(value, length) {
             detailLocation: 'Main Lobby, Apartment Mediterania Garden Residence 1 ( Bougenville Tanjung Duren Raya )',
             startTime: '08:00',
             endTime: '17:00',
-            clockIn: '07:50',
+            clockIn: '-- : --',
             clockOut: ''
         }
         return data
@@ -27,6 +28,7 @@ export function getData(value, length) {
                     location: 'Mediterania Garden Residence',
                     startTime: '08:00',
                     endTime: '17:00',
+                    dateFull: moment().add(i, 'days').format('DD MMMM YYYY').toUpperCase(),
                     isToday: moment().add(i, 'days').format('DD MMM') === moment().format('DD MMM') ? true : false
                 }
             )

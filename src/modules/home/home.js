@@ -1,6 +1,6 @@
-import React, { Component, useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Modal, Dimensions, ScrollView, ImageBackground, StatusBar } from 'react-native';
-import { widthPercentageToDP as width, heightPercentageToDP as height } from 'react-native-responsive-screen'
+import React from 'react';
+import { ScrollView, View } from 'react-native';
+import styles from './component/styles/style'
 import HomeHeader from './component/header'
 import HomeFooter from './component/footer'
 import TodaySchedule from './component/today-schedule'
@@ -18,7 +18,7 @@ function Home({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <ScrollView style={styles.headerContainer} showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <HomeHeader />
                 <TodaySchedule />
                 <NextSchedule goToUpcomingSchedule={goToUpcomingSchedule} goToScheduleDetail={goToScheduleDetail} />
@@ -27,20 +27,5 @@ function Home({ navigation }) {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white'
-    },
-    splashPicture: {
-        width: width('100%'),
-        height: height('100%')
-    },
-    headerContainer: {
-        flex: 1
-    }
-
-})
 
 export default Home
