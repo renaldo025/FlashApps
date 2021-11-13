@@ -1,11 +1,15 @@
-import React, { Component, useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { widthPercentageToDP as width, heightPercentageToDP as height } from 'react-native-responsive-screen'
+import React, { useState, useEffect } from 'react';
+import { Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { getData } from '../../../services/dummy-data/dummyData'
+import { useDispatch } from 'react-redux'
+import { setScheduleData } from '../../../redux/reducer'
+import styles from './styles/style'
+import CONSTANT from '../../../constant/constant'
 
 function NextSchedule({ goToUpcomingSchedule, goToScheduleDetail }) {
     const [nextSchedule, setNextSchedule] = useState([]);
+    const dispatch = useDispatch()
 
     useEffect(() => {
         getNextSchedule()
@@ -16,13 +20,9 @@ function NextSchedule({ goToUpcomingSchedule, goToScheduleDetail }) {
         setNextSchedule(data)
     }
 
-    function navigateTo(day) {
-        if (day == 'Sunday' || day == 'Saturday') {
-            Alert.alert("Libur")
-        }
-        else {
-            goToScheduleDetail()
-        }
+    function navigateTo(item) {
+        dispatch(setScheduleData(item))
+        goToScheduleDetail()
     }
 
     function renderNextSchedule() {
@@ -32,7 +32,7 @@ function NextSchedule({ goToUpcomingSchedule, goToScheduleDetail }) {
                     <TouchableOpacity
                         key={key}
                         style={[styles.scheduleBox, styles.boxShadow]}
-                        onPress={() => navigateTo(item.day)}>
+                        onPress={() => navigateTo(item)}>
                         <View style={{ marginBottom: 30 }}>
                             <Text style={styles.dayText}>{item.day}</Text>
                             <Text style={styles.dateText}>{item.date}</Text>
@@ -42,7 +42,7 @@ function NextSchedule({ goToUpcomingSchedule, goToScheduleDetail }) {
                             <View style={styles.timeBox}>
                                 <Icon name='clock' size={18} color={'black'} light />
                                 <Text style={styles.timeBoxText}>
-                                    {item.day === 'Sunday' || item.day === 'Saturday' ? 'No Schedule' : `${item.startTime} - ${item.endTime}`}
+                                    {item.day === CONSTANT.WEEKEND.SUNDAY || item.day === CONSTANT.WEEKEND.SATURDAY ? CONSTANT.NO_SCHEDULE : `${item.startTime} - ${item.endTime}`}
                                 </Text>
                             </View>
                         </View>
@@ -54,7 +54,7 @@ function NextSchedule({ goToUpcomingSchedule, goToScheduleDetail }) {
 
     return (
         <View style={{ flex: 1 }}>
-            <View style={styles.headerContainer}>
+            <View style={styles.nextHeaderContainer}>
                 <View style={styles.titleSection}>
                     <Text style={styles.leftTitle}>NEXT SCHEDULE</Text>
                     <TouchableOpacity>
@@ -69,80 +69,5 @@ function NextSchedule({ goToUpcomingSchedule, goToScheduleDetail }) {
     );
 
 }
-
-const styles = StyleSheet.create({
-    headerContainer: {
-        flexDirection: 'column',
-        marginTop: 20,
-    },
-    titleSection: {
-        flexDirection: 'row',
-        width: width('100%'),
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: 15,
-        marginBottom: 10
-    },
-    scrollView: {
-        paddingLeft: 15,
-    },
-    leftTitle: {
-        fontWeight: 'bold',
-        fontSize: 18,
-        color: 'black'
-    },
-    rightTitle: {
-        fontSize: 16,
-        color: 'red'
-    },
-    scheduleBox: {
-        width: width('80%'),
-        backgroundColor: 'rgb(244,244,244)',
-        borderRadius: 8,
-        paddingHorizontal: 9,
-        paddingVertical: 8,
-        alignSelf: 'center',
-        marginRight: 10,
-        marginBottom: 5,
-        marginLeft: 3,
-
-    },
-    insideBoxTitle: {
-        fontWeight: '500',
-        fontSize: 18,
-        color: 'black',
-        marginBottom: 3
-    },
-    timeBox: {
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    timeBoxText: {
-        marginLeft: 8,
-        color: 'black',
-        fontSize: 15,
-        bottom: 1
-    },
-    dayText: {
-        fontSize: 16,
-        marginBottom: 2,
-        color: 'grey'
-    },
-    dateText: {
-        fontSize: 25,
-        color: 'black',
-        fontWeight: 'bold'
-    },
-    boxShadow: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-        elevation: 2,
-    }
-})
 
 export default NextSchedule
