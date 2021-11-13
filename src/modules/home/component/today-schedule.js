@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginBottom: 5,
         marginLeft: 8,
-        elevation: 3,
+        elevation: 2,
     }
 
 })

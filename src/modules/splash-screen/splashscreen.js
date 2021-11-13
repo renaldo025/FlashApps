@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Modal, Dimensions, ScrollView, ImageBackground, ProgressBarAndroid } from 'react-native';
+import { StyleSheet, View, ImageBackground, ProgressBarAndroid } from 'react-native';
 import { widthPercentageToDP as width, heightPercentageToDP as height } from 'react-native-responsive-screen'
 
 const splash_image = "../../../assets/images/flash_logo.png"

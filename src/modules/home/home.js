@@ -6,16 +6,22 @@ import HomeFooter from './component/footer'
 import TodaySchedule from './component/today-schedule'
 import NextSchedule from './component/next-schedule'
 
-const splash_image = "../../../assets/images/flash_logo.png"
-
 function Home({ navigation }) {
+
+    function goToUpcomingSchedule() {
+        navigation.navigate('UpcomingSchedule')
+    }
+
+    function goToScheduleDetail() {
+        navigation.navigate('ScheduleDetail')
+    }
 
     return (
         <View style={styles.container}>
             <ScrollView style={styles.headerContainer} showsVerticalScrollIndicator={false}>
                 <HomeHeader />
                 <TodaySchedule />
-                <NextSchedule />
+                <NextSchedule goToUpcomingSchedule={goToUpcomingSchedule} goToScheduleDetail={goToScheduleDetail} />
             </ScrollView>
             <HomeFooter />
         </View>

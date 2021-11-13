@@ -1,43 +1,53 @@
 import React, { Component, useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { widthPercentageToDP as width, heightPercentageToDP as height } from 'react-native-responsive-screen'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { getData } from '../../../services/dummy-data/dummyData'
 
-function NextSchedule({ navigation }) {
+function NextSchedule({ goToUpcomingSchedule, goToScheduleDetail }) {
     const [nextSchedule, setNextSchedule] = useState([]);
-
 
     useEffect(() => {
         getNextSchedule()
     }, [])
 
     function getNextSchedule() {
-        const data = getData('nextSchedule')
+        const data = getData('nextSchedule', 7)
         setNextSchedule(data)
+    }
+
+    function navigateTo(day) {
+        if (day == 'Sunday' || day == 'Saturday') {
+            Alert.alert("Libur")
+        }
+        else {
+            goToScheduleDetail()
+        }
     }
 
     function renderNextSchedule() {
         {
             return nextSchedule.map((item, key) => {
                 return (
-                    <TouchableOpacity style={[styles.scheduleBox, styles.boxShadow]}>
+                    <TouchableOpacity
+                        key={key}
+                        style={[styles.scheduleBox, styles.boxShadow]}
+                        onPress={() => navigateTo(item.day)}>
                         <View style={{ marginBottom: 30 }}>
                             <Text style={styles.dayText}>{item.day}</Text>
                             <Text style={styles.dateText}>{item.date}</Text>
                         </View>
                         <View>
-                            <Text style={styles.insideBoxTitle}>{item.location}e</Text>
+                            <Text style={styles.insideBoxTitle}>{item.location}</Text>
                             <View style={styles.timeBox}>
                                 <Icon name='clock' size={18} color={'black'} light />
                                 <Text style={styles.timeBoxText}>
-                                    {item.day === 'Sunday' ? 'No Schedule' : `${item.startTime} - ${item.endTime}`}
+                                    {item.day === 'Sunday' || item.day === 'Saturday' ? 'No Schedule' : `${item.startTime} - ${item.endTime}`}
                                 </Text>
                             </View>
                         </View>
                     </TouchableOpacity>
                 )
-
             })
         }
     }
@@ -48,7 +58,7 @@ function NextSchedule({ navigation }) {
                 <View style={styles.titleSection}>
                     <Text style={styles.leftTitle}>NEXT SCHEDULE</Text>
                     <TouchableOpacity>
-                        <Text style={styles.rightTitle} onPress={() => { alert(nextSchedule) }}>See all</Text>
+                        <Text style={styles.rightTitle} onPress={goToUpcomingSchedule}>See all</Text>
                     </TouchableOpacity>
                 </View>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.scrollView}>
@@ -92,6 +102,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 9,
         paddingVertical: 8,
         alignSelf: 'center',
+        marginRight: 10,
+        marginBottom: 5,
+        marginLeft: 3,
 
     },
     insideBoxTitle: {
@@ -128,10 +141,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.22,
         shadowRadius: 2.22,
-        marginRight: 10,
-        marginBottom: 5,
         elevation: 2,
-        marginLeft: 2.5
     }
 })
 
