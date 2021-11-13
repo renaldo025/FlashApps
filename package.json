@@ -7,12 +7,22 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prettier": "prettier 'src/**/*.js'"
   },
   "dependencies": {
+    "@react-navigation/native": "^6.0.6",
+    "@react-navigation/native-stack": "^6.2.5",
+    "@react-navigation/stack": "^6.0.11",
+    "moment": "^2.29.1",
     "react": "17.0.2",
     "react-native": "0.66.2",
-    "react-native-template-": "thecodingmachine/react-native-boilerplate"
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-responsive-screen": "^1.4.2",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-screens": "^3.9.0",
+    "react-native-template-": "thecodingmachine/react-native-boilerplate",
+    "react-native-vector-icons": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -22,6 +32,7 @@
     "eslint": "7.14.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.66.2",
+    "prettier": "^2.4.1",
     "react-test-renderer": "17.0.2"
   },
   "jest": {
